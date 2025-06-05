@@ -4,78 +4,60 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script
-      src="https://kit.fontawesome.com/b570bb6f27.js"
-      crossorigin="anonymous"
+      src="https://code.responsivevoice.org/responsivevoice.js"
+      async
     ></script>
-
-    <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;400;700;900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&family=Inter:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <title>Amigo Secreto</title>
+    <link rel="stylesheet" href="style.css" />
+    <title>JS Game</title>
   </head>
 
   <body>
-    <main class="main-content">
-      <header class="header-banner">
-        <h1 class="main-title">Amigo Secreto</h1>
-        <img
-          src="assets/amigo-secreto.png"
-          alt="Imagem representativa de amigo secreto"
-        />
-      </header>
-
-      <section class="input-section">
-        <h2 class="section-title">Digite o nome dos seus amigos</h2>
-        <div class="input-wrapper">
+    <div class="container">
+      <div class="container__conteudo">
+        <div class="container__informacoes">
+          <div class="container__texto">
+            <h1>Jogo da Adivinhação</h1>
+            <p class="texto__paragrafo">Tente adivinhar um número de 1 a 10</p>
+          </div>
           <input
-            type="text"
-            id="amigo"
-            class="input-name"
-            placeholder="Digite um nome"
+            type="number"
+            min="1"
+            max="10"
+            class="container__input"
+            aria-label="Digite um número entre 1 e 10"
           />
-          <button class="button-add">Adicionar</button>
+          <div class="chute container__botoes">
+            <button
+              onclick="verificarChute()"
+              class="container__botao"
+              aria-label="Fazer um chute"
+            >
+              Chutar
+            </button>
+            <button
+              onclick="reiniciarJogo()"
+              id="reiniciar"
+              class="container__botao"
+              disabled
+              aria-label="Iniciar um novo jogo"
+            >
+              Novo jogo
+            </button>
+          </div>
         </div>
-        <span id="mensagemErro" class="mensagem-erro" style="display: none;"></span>
-
-        <ul
-          id="listaAmigos"
-          class="name-list"
-          aria-labelledby="listaAmigos"
-          role="list"
-        ></ul>
-        <ul id="resultado" class="result-list" aria-live="polite"></ul>
-
-        <div class="button-container">
-          <button
-            class="button-draw"
-            aria-label="Sortear amigo secreto"
-          >
-            <i class="fa-regular fa-circle-play"></i> Sortear amigo
-          </button>
-
-          <button
-            class="button-reset"
-            aria-label="Reiniciar sorteio"
-            disabled
-            style="opacity: 0.5"
-          >
-            <i class="fa-solid fa-arrows-rotate"></i>Reiniciar sorteio
-          </button>
-
-          <button
-            class="button-limpar"
-            aria-label="Limpar lista"
-            style="opacity: 1"
-          >
-            <i class="fa-solid fa-wand-magic-sparkles"></i> Limpar Lista
-          </button>
-        </div>
-      </section>
-    </main>
+        <img
+          src="./img/ia.png"
+          alt="Imagem ilustrativa de uma inteligência artificial"
+          class="container__imagem-pessoa"
+        />
+      </div>
+    </div>
 
     <script src="app.js" defer></script>
   </body>
