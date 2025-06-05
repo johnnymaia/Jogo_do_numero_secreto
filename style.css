@@ -1,21 +1,41 @@
+:root {
+  --cor-primaria: #1875e8;
+  --cor-secundaria: #041832;
+  --cor-fundo-gradiente-inicio: #1354a5;
+  --cor-fundo-gradiente-meio: #041832;
+  --cor-fundo-gradiente-fim: #01080e;
+  --cor-sombra: rgba(1, 8, 14, 0.15);
+  --cor-texto: white;
+  --cor-input-texto: #1875e8;
+  --cor-input-borda-erro: #e81818; /* Novo: Cor para borda de erro */
+  --cor-historico-acerto: #4caf50; /* Novo: Cor para acerto no histórico */
+  --cor-historico-erro: #f44336; /* Novo: Cor para erro no histórico */
+
+  --fonte-principal: "Inter", sans-serif;
+  --fonte-titulo: "Chakra Petch", sans-serif;
+
+  --transicao-padrao: all 0.3s ease-in-out; /* Novo: Variável para transições */
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  color: white;
+  color: var(--cor-texto);
 }
 
 body {
   background: linear-gradient(
-    #1354a5 0%,
-    #041832 33.33%,
-    #041832 66.67%,
-    #01080e 100%
+    var(--cor-fundo-gradiente-inicio) 0%,
+    var(--cor-fundo-gradiente-meio) 33.33%,
+    var(--cor-fundo-gradiente-meio) 66.67%,
+    var(--cor-fundo-gradiente-fim) 100%
   );
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden; /* Evita scroll desnecessário */
 }
 
 body::before {
@@ -28,20 +48,25 @@ body::before {
   width: 100%;
   height: 100%;
   opacity: 0.4;
+  z-index: 0; /* Garante que a imagem de fundo fique atrás do conteúdo */
 }
 
 .container {
   width: 80%;
+  max-width: 1200px; /* Limita a largura máxima do container */
   height: 80%;
+  max-height: 700px; /* Limita a altura máxima do container */
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-radius: 24px;
-  border: 1px solid #1875e8;
-  box-shadow: 4px 4px 20px 0px rgba(1, 8, 14, 0.15);
+  border: 1px solid var(--cor-primaria);
+  box-shadow: 4px 4px 20px 0px var(--cor-sombra);
   background-image: url("img/Ruido.png");
   background-size: 100% 100%;
   position: relative;
+  z-index: 1; /* Garante que o container fique acima da imagem de fundo */
+  overflow: hidden; /* Para garantir que o confete não vaze se for implementado no futuro */
 }
 
 .container__conteudo {
@@ -49,30 +74,52 @@ body::before {
   align-items: center;
   position: absolute;
   bottom: 0;
+  width: 100%; /* Garante que o conteúdo ocupe a largura total */
+  transition: var(--transicao-padrao); /* Adiciona transição para o efeito de sucesso */
+}
+
+/* Efeito visual ao acertar */
+.container__conteudo--sucesso {
+    background-color: rgba(76, 175, 80, 0.2); /* Um leve brilho verde */
+    box-shadow: 0 0 30px rgba(76, 175, 80, 0.6);
 }
 
 .container__informacoes {
   flex: 1;
   padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Espaçamento entre os elementos de informação */
 }
 
 .container__botao {
   border-radius: 16px;
-  background: #1875e8;
+  background: var(--cor-primaria);
   padding: 16px 24px;
   width: 100%;
   font-size: 24px;
   font-weight: 700;
   border: none;
-  margin-top: 2rem;
+  cursor: pointer;
+  transition: var(--transicao-padrao); /* Transição para o hover */
+  display: flex; /* Para alinhar ícone e texto */
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em; /* Espaçamento entre ícone e texto */
+}
+
+.container__botao:hover:not(:disabled) {
+  background-color: #1160c2; /* Cor mais escura no hover */
+  transform: translateY(-2px); /* Pequeno efeito de elevação */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .container__texto {
-  margin: 16px 0 16px 0;
+  margin-bottom: 1rem; /* Ajusta o espaçamento */
 }
 
 .container__texto-azul {
-  color: #1875e8;
+  color: var(--cor-primaria);
 }
 
 .container__input {
@@ -81,27 +128,40 @@ body::before {
   border-radius: 16px;
   background-color: #fff;
   border: none;
-  color: #1875e8;
+  color: var(--cor-input-texto);
   padding: 2rem;
   font-size: 24px;
   font-weight: 700;
-  font-family: "Inter", sans-serif;
+  font-family: var(--fonte-principal);
+  text-align: center; /* Centraliza o texto digitado */
+  transition: var(--transicao-padrao); /* Transição para a borda de erro */
 }
+
+/* Estilo para input inválido */
+.container__input.input__invalido {
+  border: 3px solid var(--cor-input-borda-erro);
+  box-shadow: 0 0 15px var(--cor-input-borda-erro);
+}
+
 
 .container__botoes {
   display: flex;
   gap: 2em;
+  flex-wrap: wrap; /* Permite que os botões quebrem a linha em telas pequenas */
+  justify-content: center; /* Centraliza os botões */
 }
 
 h1 {
-  font-family: "Chakra Petch", sans-serif;
+  font-family: var(--fonte-titulo);
   font-size: 72px;
-  padding-bottom: 3rem;
+  padding-bottom: 1.5rem; /* Ajusta o espaçamento */
 }
 
 p,
-button {
-  font-family: "Inter", sans-serif;
+button,
+.contador-tentativas,
+.historico__lista {
+  font-family: var(--fonte-principal);
 }
 
 .texto__paragrafo {
@@ -111,15 +171,100 @@ button {
 
 button:disabled {
   background-color: gray;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
+.container__imagem-pessoa {
+  width: 40%; /* Ajusta o tamanho da imagem */
+  max-width: 400px; /* Limita o tamanho máximo */
+  align-self: flex-end; /* Alinha a imagem à parte inferior do container */
+  position: relative; /* Para ajustes de posição finos, se necessário */
+  right: 0;
+  bottom: 0;
+}
+
+/* Novas classes para o contador de tentativas e histórico */
+.contador-tentativas {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border: 1px solid var(--cor-primaria);
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.historico__secao {
+    margin-top: 2rem;
+    max-height: 150px; /* Limita a altura do histórico */
+    overflow-y: auto; /* Adiciona scroll se o conteúdo for muito grande */
+    padding-right: 10px; /* Espaço para a barra de scroll */
+}
+
+.historico__secao h3 {
+    font-size: 24px;
+    margin-bottom: 1rem;
+    color: var(--cor-primaria);
+}
+
+.historico__lista {
+    list-style: none; /* Remove os marcadores de lista padrão */
+    padding: 0;
+}
+
+.historico__lista li {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.historico__acerto {
+    background-color: rgba(76, 175, 80, 0.4) !important; /* Mais visível para acertos */
+    font-weight: bold;
+}
+
+.historico__erro {
+    background-color: rgba(244, 67, 54, 0.4) !important; /* Mais visível para erros */
+}
+
+
+/* Scrollbar customizado (Webkit browsers) */
+.historico__secao::-webkit-scrollbar {
+  width: 8px;
+}
+
+.historico__secao::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.historico__secao::-webkit-scrollbar-thumb {
+  background: var(--cor-primaria);
+  border-radius: 10px;
+}
+
+.historico__secao::-webkit-scrollbar-thumb:hover {
+  background: #1160c2;
+}
+
+
+/* Media Queries para responsividade */
 @media screen and (max-width: 1250px) {
   h1 {
     font-size: 50px;
   }
 
   .container__botao {
-    font-size: 16px;
+    font-size: 18px; /* Ajusta para telas menores */
+    padding: 12px 20px;
   }
 
   .texto__paragrafo {
@@ -127,15 +272,89 @@ button:disabled {
   }
 
   .container__imagem-pessoa {
-    display: none;
+    display: none; /* Oculta a imagem em telas menores para otimizar espaço */
   }
 
   .container__conteudo {
-    display: block;
-    position: inherit;
+    position: static; /* Remove o posicionamento absoluto para o layout fluir */
+    flex-direction: column; /* Coloca os elementos em coluna */
+    justify-content: center;
+    height: 100%; /* Ocupa a altura total disponível */
   }
 
   .container__informacoes {
+    padding: 2rem; /* Ajusta o padding */
+    justify-content: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .container__botoes {
+    flex-direction: column; /* Botões em coluna em telas muito pequenas */
+    gap: 1rem;
+  }
+
+  .container {
+      width: 95%; /* Ocupa mais largura em telas menores */
+      height: auto; /* Altura automática */
+      min-height: 80vh; /* Garante uma altura mínima */
+      flex-direction: column; /* Garante que o container também se ajuste */
+  }
+  .container__input {
+    height: 60px;
+    font-size: 20px;
     padding: 1rem;
   }
+}
+
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 40px;
+        padding-bottom: 1rem;
+    }
+
+    .texto__paragrafo {
+        font-size: 20px;
+    }
+
+    .container__botao {
+        font-size: 16px;
+        padding: 10px 15px;
+    }
+    
+    .container__informacoes {
+        padding: 1.5rem;
+    }
+    .contador-tentativas {
+        font-size: 18px;
+    }
+    .historico__secao h3 {
+        font-size: 20px;
+    }
+    .historico__lista li {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 32px;
+    }
+    .texto__paragrafo {
+        font-size: 18px;
+    }
+    .container__input {
+        font-size: 18px;
+        height: 50px;
+    }
+    .container__botao {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+    .contador-tentativas {
+        font-size: 16px;
+    }
+    .historico__secao {
+        max-height: 120px; /* Reduz altura do histórico */
+    }
 }
