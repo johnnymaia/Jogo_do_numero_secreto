@@ -1,141 +1,230 @@
+/* Definição de variáveis CSS para cores, fontes e espaçamentos */
+:root {
+    --cor-primaria: #1354a5; /* Azul escuro 1 */
+    --cor-secundaria: #041832; /* Azul escuro 2 */
+    --cor-terciaria: #01080e; /* Azul mais escuro */
+    --cor-destaque: #1875e8; /* Azul vibrante */
+    --cor-texto-padrao: white;
+    --cor-input-texto: #1875e8;
+    --cor-botao-desabilitado: #6c757d; /* Um cinza padrão para desabilitado */
+
+    --fonte-titulo: "Chakra Petch", sans-serif;
+    --fonte-geral: "Inter", sans-serif;
+
+    --espacamento-medio: 2rem; /* 32px */
+    --espacamento-grande: 3rem; /* 48px */
+    --borda-arredondada: 16px;
+}
+
+/* Reset básico para todos os elementos:
+   - box-sizing: border-box para facilitar o layout (padding e border incluídos na largura/altura).
+   - margin e padding zerados para controle total do espaçamento.
+*/
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  color: white;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  background: linear-gradient(
-    #1354a5 0%,
-    #041832 33.33%,
-    #041832 66.67%,
-    #01080e 100%
-  );
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    /* Gradiente de fundo com cores definidas por variáveis */
+    background: linear-gradient(
+        var(--cor-primaria) 0%,
+        var(--cor-secundaria) 33.33%,
+        var(--cor-secundaria) 66.67%,
+        var(--cor-terciaria) 100%
+    );
+    height: 100vh; /* Ocupa a altura total da viewport */
+    display: flex;
+    align-items: center; /* Centraliza verticalmente o conteúdo */
+    justify-content: center; /* Centraliza horizontalmente o conteúdo */
+    color: var(--cor-texto-padrao); /* Define a cor padrão do texto para o body e seus filhos */
+    font-family: var(--fonte-geral); /* Define a fonte padrão para o body e seus filhos */
 }
 
+/* Pseudo-elemento para a imagem de fundo decorativa com opacidade */
 body::before {
-  background-image: url("img/code.png");
-  background-repeat: no-repeat;
-  background-position: right;
-  content: "";
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0.4;
+    background: url("img/code.png") no-repeat right / cover; /* shorthand: url, repeat, position / size */
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    z-index: -1; /* Garante que a imagem de fundo fique atrás do conteúdo */
 }
 
+/* Estilo do container principal do jogo */
 .container {
-  width: 80%;
-  height: 80%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 24px;
-  border: 1px solid #1875e8;
-  box-shadow: 4px 4px 20px 0px rgba(1, 8, 14, 0.15);
-  background-image: url("img/Ruido.png");
-  background-size: 100% 100%;
-  position: relative;
+    width: 80%;
+    max-width: 1200px; /* Limite a largura máxima para telas muito grandes */
+    height: 80%;
+    max-height: 800px; /* Limite a altura máxima */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: var(--borda-arredondada);
+    border: 1px solid var(--cor-destaque);
+    box-shadow: 4px 4px 20px 0px rgba(1, 8, 14, 0.15);
+    background-image: url("img/Ruido.png");
+    background-size: cover; /* A imagem de ruído cobre todo o container */
+    position: relative;
+    overflow: hidden; /* Garante que os cantos arredondados sejam respeitados */
 }
 
+/* Conteúdo interno do container (informações + imagem da IA) */
 .container__conteudo {
-  display: flex;
-  align-items: center;
-  position: absolute;
-  bottom: 0;
+    display: flex;
+    align-items: center;
+    position: absolute; /* Posição absoluta para alinhamento específico */
+    bottom: 0; /* Alinha na parte inferior do container */
+    width: 100%; /* Ocupa a largura total do container */
+    padding: 0 var(--espacamento-grande); /* Padding horizontal */
 }
 
+/* Seção de informações (título, parágrafo, input, botões) */
 .container__informacoes {
-  flex: 1;
-  padding: 3rem;
+    flex: 1; /* Ocupa o espaço disponível */
+    padding-right: var(--espacamento-grande); /* Espaçamento à direita se tiver imagem ao lado */
 }
 
-.container__botao {
-  border-radius: 16px;
-  background: #1875e8;
-  padding: 16px 24px;
-  width: 100%;
-  font-size: 24px;
-  font-weight: 700;
-  border: none;
-  margin-top: 2rem;
+/* Imagem da pessoa/IA */
+.container__imagem-pessoa {
+    max-width: 50%; /* Garante que a imagem não seja maior que a metade */
+    height: auto; /* Mantém a proporção */
+    display: block; /* Remove possíveis espaços extras de imagens inline */
 }
 
-.container__texto {
-  margin: 16px 0 16px 0;
-}
 
-.container__texto-azul {
-  color: #1875e8;
-}
-
-.container__input {
-  width: 100%;
-  height: 72px;
-  border-radius: 16px;
-  background-color: #fff;
-  border: none;
-  color: #1875e8;
-  padding: 2rem;
-  font-size: 24px;
-  font-weight: 700;
-  font-family: "Inter", sans-serif;
-}
-
-.container__botoes {
-  display: flex;
-  gap: 2em;
-}
-
+/* Estilos dos textos */
 h1 {
-  font-family: "Chakra Petch", sans-serif;
-  font-size: 72px;
-  padding-bottom: 3rem;
-}
-
-p,
-button {
-  font-family: "Inter", sans-serif;
+    font-family: var(--fonte-titulo);
+    font-size: 72px; /* Pode ser ajustado com rem para responsividade */
+    padding-bottom: var(--espacamento-grande);
 }
 
 .texto__paragrafo {
-  font-size: 32px;
-  font-weight: 400;
+    font-size: 32px; /* Pode ser ajustado com rem */
+    font-weight: 400;
 }
 
-button:disabled {
-  background-color: gray;
+/* Estilo do input */
+.container__input {
+    width: 100%;
+    height: 72px;
+    border-radius: var(--borda-arredondada);
+    background-color: #fff;
+    border: none;
+    color: var(--cor-input-texto);
+    padding: var(--espacamento-medio);
+    font-size: 24px; /* Pode ser ajustado com rem */
+    font-weight: 700;
+    font-family: var(--fonte-geral);
+    text-align: center; /* Centraliza o texto digitado */
+    outline: none; /* Remove o outline padrão */
+    transition: box-shadow 0.2s ease-in-out; /* Transição para o foco */
 }
+
+.container__input:focus {
+    box-shadow: 0 0 0 3px var(--cor-destaque), 0 0 0 6px rgba(24, 117, 232, 0.2); /* Efeito de foco visual */
+}
+
+/* Contêiner dos botões */
+.container__botoes {
+    display: flex;
+    gap: var(--espacamento-medio); /* Espaçamento entre os botões */
+    margin-top: var(--espacamento-medio); /* Espaçamento superior */
+}
+
+/* Estilo geral dos botões */
+.container__botao {
+    border-radius: var(--borda-arredondada);
+    background: var(--cor-destaque);
+    padding: 16px 24px;
+    width: 100%;
+    font-size: 24px; /* Pode ser ajustado com rem */
+    font-weight: 700;
+    border: none;
+    cursor: pointer; /* Indica que é um elemento clicável */
+    transition: background-color 0.3s ease; /* Transição suave na cor de fundo */
+    color: var(--cor-texto-padrao); /* Garante que o texto do botão seja branco */
+}
+
+/* Efeito hover para botões não desabilitados */
+.container__botao:hover:not(:disabled) {
+    background-color: #125aa6; /* Um tom ligeiramente mais escuro de azul */
+}
+
+/* Estilo para botões desabilitados */
+button:disabled {
+    background-color: var(--cor-botao-desabilitado);
+    cursor: not-allowed; /* Altera o cursor para indicar que não é clicável */
+    opacity: 0.7; /* Reduz a opacidade para indicar o estado */
+}
+
+/* Ajustes de margem para o contêiner de texto */
+.container__texto {
+    margin: 1rem 0; /* Espaçamento superior e inferior */
+}
+
+/* Estilo para texto com cor azul de destaque */
+.container__texto-azul {
+    color: var(--cor-destaque);
+}
+
+/* ------------------------------------------- */
+/* MEDIA QUERIES (Responsividade)             */
+/* ------------------------------------------- */
 
 @media screen and (max-width: 1250px) {
-  h1 {
-    font-size: 50px;
-  }
+    .container {
+        flex-direction: column; /* Empilha o conteúdo em coluna em telas menores */
+        height: auto; /* Altura flexível para o container */
+        width: 95%; /* Ocupa mais largura da tela */
+        padding: 2rem 1rem; /* Adiciona padding interno para melhor espaçamento */
+    }
 
-  .container__botao {
-    font-size: 16px;
-  }
+    .container__conteudo {
+        position: static; /* Remove o posicionamento absoluto */
+        flex-direction: column; /* Seus filhos também empilham */
+        padding: 0; /* Remove padding que não é mais necessário aqui */
+        align-items: center; /* Centraliza itens */
+        text-align: center; /* Centraliza textos */
+    }
 
-  .texto__paragrafo {
-    font-size: 24px;
-  }
+    .container__informacoes {
+        padding-right: 0; /* Remove padding extra */
+        margin-bottom: var(--espacamento-medio); /* Espaçamento inferior */
+        width: 100%;
+    }
 
-  .container__imagem-pessoa {
-    display: none;
-  }
+    h1 {
+        font-size: 3rem; /* Tamanho de fonte adaptado */
+        padding-bottom: 1rem;
+    }
 
-  .container__conteudo {
-    display: block;
-    position: inherit;
-  }
+    .texto__paragrafo {
+        font-size: 1.5rem; /* Tamanho de fonte adaptado */
+    }
 
-  .container__informacoes {
-    padding: 1rem;
-  }
+    .container__input {
+        font-size: 1.2rem; /* Tamanho de fonte do input adaptado */
+        height: 60px; /* Altura ajustada */
+        padding: 1rem;
+    }
+
+    .container__botoes {
+        flex-direction: column; /* Botões empilhados verticalmente */
+        gap: 1rem; /* Espaçamento menor entre botões */
+        margin-top: 1rem;
+    }
+
+    .container__botao {
+        font-size: 1.2rem; /* Tamanho de fonte do botão adaptado */
+        padding: 12px 18px; /* Padding ajustado */
+    }
+
+    .container__imagem-pessoa {
+        display: none; /* Oculta a imagem da IA em telas menores */
+    }
 }
